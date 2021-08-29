@@ -83,6 +83,7 @@
       width: fit-content;
       display: inline-block;
       cursor: pointer;
+      vertical-align: middle;
       text-align: left;
     }
     .custom-select-opener {
@@ -92,6 +93,8 @@
       font-size: 100px;
       padding: 10px;
       padding-right: 50px;
+      position: relative;
+      overflow: hidden;
     }
     .is-open .custom-select-opener > span::after {
       transform: rotate(90deg);
@@ -216,7 +219,7 @@
       <select id="category-switch" class="switch">
         <option value="Vaccine">Vaccine</option>
         <option value="Epidemic">Epidemic</option>
-      </select>-<select id="state-switch" class="switch"></select>
+      </select><span>-</span><select id="state-switch" class="switch"></select>
     </h1>
     <div id="vax-container">
       <div class="pie-container container">
