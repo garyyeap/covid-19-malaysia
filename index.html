@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vax-Malaysia</title>
+  <title>Vaccine-Malaysia</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/covid.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/covid.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="/covid.svg">
@@ -83,6 +83,7 @@
       width: fit-content;
       display: inline-block;
       cursor: pointer;
+      text-align: left;
     }
     .custom-select-opener {
       color: #fff;
@@ -104,7 +105,11 @@
       display: inline-block;
       transition: transform .5s;
     }
+    .custom-select-panel {
+      width: fit-content;
+    }
     .custom-select-option {
+      width: 100%;
       padding: 10px;
     }
     .custom-select-option.is-selected {
@@ -130,7 +135,7 @@
     .line {
       width: 100%;
       height: 600px;
-      padding: 0 20px;
+      padding: 0px;
     }
     #header {
       padding: 10px;
@@ -161,6 +166,9 @@
     #footer a {
       text-decoration: none;
       color: #9693a9;
+    }
+    #epidemic-container {
+      display: none;
     }
     @media (max-width: 1024px) {
       #banner {
@@ -204,18 +212,33 @@
   </div>
   <div id="loading-cover"></div>
   <div id="main-container">
-    <h1 id="banner">Vax-<select id="switch"></select></h1>
-    <div class="pie-container container">
-      <div id="vaccine-types" class="pie"></div>
-      <div id="vaccinated" class="pie"></div>
+    <h1 id="banner">
+      <select id="category-switch" class="switch">
+        <option value="Vaccine">Vaccine</option>
+        <option value="Epidemic">Epidemic</option>
+      </select>-<select id="state-switch" class="switch"></select>
+    </h1>
+    <div id="vax-container">
+      <div class="pie-container container">
+        <div id="vaccine-types" class="pie"></div>
+        <div id="vaccinated" class="pie"></div>
+      </div>
+      <div class="container">
+        <h2>Fully vaccinated</h2>
+        <div id="fully-vaccinated-timeline" class="line"></div>
+      </div>
+      <div class="container">
+        <h2>Daily doses</h2>
+        <div id="daily-vaccination-timeline" class="line"></div>
+      </div>
     </div>
-    <div class="container">
-      <h2>Fully vaccinated</h2>
-      <div id="fully-vaccinated-timeline" class="line"></div>
-    </div>
-    <div class="container">
-      <h2>Daily doses</h2>
-      <div id="daily-vaccination-timeline" class="line"></div>
+    <div id="epidemic-container">
+      <div class="container">
+        <h2>New cases</h2>
+        <div id="tests-and-cases-timeline" class="line"></div>
+        <h2>Deaths</h2>
+        <div id="deaths-timeline" class="line"></div>
+      </div>
     </div>
     <div id="footer"><a href="https://en.wikipedia.org/wiki/File:Coronavirus_icon.svg">Icon</a> by Lucbyhet / <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC By</a></div>
   </div>
