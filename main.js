@@ -86,7 +86,7 @@ function categoryByState (data) {
 
   stateSelector.onchange = categorySelector.onchange = initCharts;
   stateSelector.innerHTML = states.map(function (val) {
-    return `<option value="${val}">${val}</option>`;
+    return `<option value="${val}">${val.replace('W.P. ', '')}</option>`;
   }).join('');
 
   loadingCover.ontransitionend = function () {
