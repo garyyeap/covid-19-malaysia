@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vax-Malaysia</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/covid.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/covid.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/covid.svg">
+  <script src="https://cdn.jsdelivr.net/npm/custom-select@1.1.15/build/custom-select.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/custom-select@1.1.15/build/custom-select.css">  
+  <style>
+    @keyframes breathe {
+      0% {
+        background-size: 750px;
+        background-position: -200px -250px;
+      }
+      25% {
+        background-size: 450px;
+        background-position: 300px -250px;
+      }
+      50% {
+        background-size: 550px;
+        background-position: 800px -250px;
+      }
+      65% {
+        background-size: 1250px;
+        background-position: 400px -650px;
+      }
+      67% {
+        background-size: 550px;
+        background-position: 700px -250px;
+      }
+      100% {
+        background-size: 750px;
+        background-position: -200px -250px;
+      }
+    }
+    body {
+      animation: breathe infinite 3s;
+      background: url(covid.svg) no-repeat #100c2a;
+      background-size: 750px;
+      background-position: -200px -250px;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    h2 {
+      color: #fff;
+      text-align: center;
+    }
+    #main-container {
+      display: none;
+    }
+    #loading-cover {
+      background: url(loading.svg) no-repeat center rgba(255, 255, 255, .5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+      transition: opacity 1s;
+    }
+    #banner {
+      color: #fff;
+      font-size: 100px;
+      text-align: right;
+      padding: 10px 10px 50px;
+      margin: 0;
+    }
+    .custom-select-container {
+      width: fit-content;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .custom-select-opener {
+      color: #fff;
+      background: rgba(255, 255, 255, .5);
+      text-decoration: none;
+      font-size: 100px;
+      padding: 10px;
+      padding-right: 50px;
+    }
+    .is-open .custom-select-opener > span::after {
+      transform: rotate(90deg);
+      margin-left: 15px;
+    }
+    .custom-select-opener > span::after {
+      content: "‹";
+      transform: rotate(270deg);
+      position: absolute;
+      transform-origin: center;
+      display: inline-block;
+      transition: transform .5s;
+    }
+    .custom-select-option {
+      padding: 10px;
+    }
+    .custom-select-option.is-selected {
+      color: #444;
+    }
+    .custom-select-option.is-selected::before {
+      content: none;
+      padding-right: '';
+    }
+    .container {
+      padding-top: 100px;
+    }
+    .pie-container {
+      padding-top: 100px;
+      justify-content: center;
+      display: flex;
+    }
+    .pie {
+      height: 600px;
+      width: 600px;
+      padding: 0 30px;
+    }
+    .line {
+      width: 100%;
+      height: 600px;
+      padding: 0 20px;
+    }
+    #header {
+      padding: 10px;
+      text-align: right;
+    }
+    #header a {
+      display: inline-block;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      vertical-align: middle;
+      line-height: 1.5;
+      padding: 5px;
+      text-align: center;
+      background-color: rgb(100 100 100 / 50%);
+      text-decoration: none;
+      color:rgb(255 255 255 / 50%);
+      font-weight: 500;
+    }
+    #header a:hover {
+      opacity: .5;
+    }
+    #footer {
+      color: azure;
+      padding: 40px;
+      font-size: 11px;
+    }
+    #footer a {
+      text-decoration: none;
+      color: #9693a9;
+    }
+    @media (max-width: 1024px) {
+      #banner {
+        font-size: 70px;
+        padding: 0px;
+        width: 100%;
+        text-align: right;
+      }
+      .custom-select-opener {
+        font-size: 70px;
+        padding: 0px;
+        padding-right: 35px;
+      }
+      .is-open .custom-select-opener > span::after {
+        margin-left: 10px;
+      }
+      .pie-container {
+        flex-direction: column;
+      }
+      .pie {
+        min-height: 400px;
+        width: 100%;
+        padding: 0px;
+      }
+      .line {
+        width: 100%;
+        min-height: 400px;
+        padding: 0px;
+        margin: 0px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <a class="header-button" target="_blank" href="https://www.vaksincovid.gov.my/" title="Malaysia's Official Vaccine Website">JKJAV</a>
+    <a class="header-button" target="_blank" href="https://www.buymeacoffee.com/garyyeap" title="Buy me pizza">🍕</a>
+    <a class="header-button" target="_blank" href="https://github.com/garyyeap/vax-malaysia" title="Source code">
+      <img src="https://raw.githubusercontent.com/rdimascio/icons/master/icons/github.svg" alt="Github">
+    </a>
+  </div>
+  <div id="loading-cover"></div>
+  <div id="main-container">
+    <h1 id="banner">Vax-<select id="switch"></select></h1>
+    <div class="pie-container container">
+      <div id="vaccine-types" class="pie"></div>
+      <div id="vaccinated" class="pie"></div>
+    </div>
+    <div class="container">
+      <h2>Fully vaccinated</h2>
+      <div id="fully-vaccinated-timeline" class="line"></div>
+    </div>
+    <div class="container">
+      <h2>Daily doses</h2>
+      <div id="daily-vaccination-timeline" class="line"></div>
+    </div>
+    <div id="footer"><a href="https://en.wikipedia.org/wiki/File:Coronavirus_icon.svg">Icon</a> by Lucbyhet / <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC By</a></div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
