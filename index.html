@@ -17,6 +17,7 @@
 
     gtag('config', 'G-57L4LNY2H8');
   </script>
+  <script src="https://unpkg.com/dayjs@1.10.7/dayjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/custom-select@1.1.15/build/custom-select.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/custom-select@1.1.15/build/custom-select.css">  
   <style>
@@ -47,7 +48,7 @@
       }
     }
     body {
-      animation: breathe infinite 3s;
+      /* animation: breathe infinite 3s; */
       background: url(covid.svg) no-repeat #100c2a;
       background-size: 750px;
       background-position: -200px -250px;
@@ -55,7 +56,7 @@
       padding: 0;
       font-family: sans-serif;
     }
-    h2 {
+    h2, h3 {
       color: #fff;
       text-align: center;
     }
@@ -128,15 +129,17 @@
     .container {
       padding-top: 100px;
     }
-    .pie-container {
-      padding-top: 100px;
+    .pies-container {
       justify-content: center;
       display: flex;
     }
+    .pie-container {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
     .pie {
-      height: 600px;
-      width: 600px;
-      padding: 0 30px;
+      width: 100%;
+      height: 100%;
     }
     .line {
       width: 100%;
@@ -183,6 +186,12 @@
         width: 100%;
         text-align: right;
       }
+      h2 {
+        font-size: 1em;
+      }
+      h3 {
+        font-size: .7em;
+      }
       .custom-select-opener {
         font-size: 70px;
         padding: 0px;
@@ -191,7 +200,7 @@
       .is-open .custom-select-opener > span::after {
         margin-left: 10px;
       }
-      .pie-container {
+      .pies-container {
         flex-direction: column;
       }
       .pie {
@@ -225,9 +234,15 @@
       </select><span>-</span><select id="state-switch" class="switch"></select>
     </h1>
     <div id="vax-container">
-      <div class="pie-container container">
-        <div id="vaccine-types" class="pie"></div>
-        <div id="vaccinated" class="pie"></div>
+      <div class="pies-container container">
+        <div class="pie-container">
+          <h2>Vaccinated Brands</h2>
+          <div id="vaccine-brands" class="pie"></div>
+        </div>
+        <div class="pie-container">
+          <h2>Vaccination Progress</h2>
+          <div id="vaccinated" class="pie"></div>
+        </div>
       </div>
       <div class="container">
         <h2>Fully vaccinated</h2>
@@ -236,6 +251,31 @@
       <div class="container">
         <h2>Daily doses</h2>
         <div id="daily-vaccination-timeline" class="line"></div>
+      </div>
+      <div class="pies-container">
+        <div class="pie-container">
+          <h2>Total Deaths vs % of Population Vaccinated</h2>
+          <div id="all-deaths-vs-vaxed" class="pie"></div>
+        </div>
+        <div class="pie-container">
+          <h2>Vaccinated vs Unvaccinated Deaths</h2>
+          <div id="all-deaths-unvaxed-vs-vaxed" class="pie"></div>
+        </div>
+      </div>
+      <h2>Deaths After Fully Vaccinated(14 days)</h2>
+      <div class="pies-container">
+        <div class="pie-container">
+          <h3>AstraZeneca</h3>
+          <div id="astra-deaths-period" class="pie"></div>
+        </div>
+        <div class="pie-container">
+          <h3>Pfizer</h3>
+          <div id="pfizer-deaths-period" class="pie"></div>
+        </div>
+        <div class="pie-container">
+          <h3>Sinovac</h3>
+          <div id="sinovac-deaths-period" class="pie"></div>
+        </div>
       </div>
     </div>
     <div id="epidemic-container">

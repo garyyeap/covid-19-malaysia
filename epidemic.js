@@ -5,6 +5,7 @@ function combineTestsAndCasesData (testsData, casesData) {
   casesData.unshift({});
 
   const diff = casesData.length - testsData.length;
+  
   return testsData.reduce(function (result, val, i) {
     const { cases_new, cases_import, cases_recovered, date } = casesData[i + diff];
     const totalCases = parseInt(cases_new) + parseInt(cases_import);
@@ -35,6 +36,7 @@ function combineTestsAndCasesData (testsData, casesData) {
 }
 
 export default function (testsData, casesData, deathsData) {
+  const charts = [];
   const { pcr, rtk, cases, casesImport, casesRecovered, dates, positiveRate, sevenDaysAverage } = combineTestsAndCasesData(testsData, casesData);
   const [deaths, deathDates] = deathsData.reduce(function (result, { date, deaths_new}) {
     result[0].push(deaths_new);
@@ -107,8 +109,8 @@ export default function (testsData, casesData, deathsData) {
     }]
   };
 
-  init(document.getElementById('tests-and-cases-timeline'), 'dark').setOption(testsAndCasesOptions);
-
+  charts.push(init(document.getElementById('tests-and-cases-timeline'), 'dark'));
+  charts[charts.length - 1].setOption(testsAndCasesOptions);
 
   const deathsOptions = {
     tooltip: {
@@ -134,5 +136,8 @@ export default function (testsData, casesData, deathsData) {
     }]
   }
 
-  init(document.getElementById('deaths-timeline'), 'dark').setOption(deathsOptions);
+  charts.push(init(document.getElementById('deaths-timeline'), 'dark'));
+  charts[charts.length -1].setOption(deathsOptions);
+
+  return charts;
 }
