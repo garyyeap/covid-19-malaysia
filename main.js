@@ -6,7 +6,7 @@ function fetchCSV (url) {
   return fetch(url).then(response => response.text()).then(text => csv2JSON(text));
 }
 
-function categoryByState (data) {
+function groupByState (data) {
   return data.reduce(function (result, val) {
     if (!result[val.state]) result[val.state] = [];
 
@@ -27,11 +27,11 @@ function categoryByState (data) {
       vaxContainer.style.display = 'block';
 
       if (currentState === states[0]) {
-        initVaxChart(vaxMalaysiaData, parseInt(populationData[0].pop_18));
+        initVaxChart(vaxMalaysiaData, parseInt(populationData[0].pop));
         return;
       }
 
-      const population = parseInt(populationData[states.indexOf(currentState)].pop_18);
+      const population = parseInt(populationData[states.indexOf(currentState)].pop);
       initVaxChart(vaxStatesData[currentState], population);
       return;
     }
@@ -52,9 +52,9 @@ function categoryByState (data) {
   const casesMalaysiaUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/cases_malaysia.csv';
   const testsMalaysiaUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/tests_malaysia.csv';
   const deathsMalaysiaUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/deaths_malaysia.csv';
-  const casesStetesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/cases_state.csv';
-  const testsStetesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/tests_state.csv';
-  const deathsStetesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/deaths_state.csv';
+  const casesStatesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/cases_state.csv';
+  const testsStatesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/tests_state.csv';
+  const deathsStatesUrl = 'https://raw.githubusercontent.com/MoH-Malaysia/covid19-public/main/epidemic/deaths_state.csv';
   const [ 
     testsMalaysiaData,
     casesMalaysiaData,
@@ -69,12 +69,12 @@ function categoryByState (data) {
     fetchCSV(testsMalaysiaUrl),
     fetchCSV(casesMalaysiaUrl),
     fetchCSV(deathsMalaysiaUrl),
-    fetchCSV(testsStetesUrl).then(categoryByState),
-    fetchCSV(casesStetesUrl).then(categoryByState),
-    fetchCSV(deathsStetesUrl).then(categoryByState),
+    fetchCSV(testsStatesUrl).then(groupByState),
+    fetchCSV(casesStatesUrl).then(groupByState),
+    fetchCSV(deathsStatesUrl).then(groupByState),
     fetchCSV(populationUrl),
     fetchCSV(vaxMalaysiaUrl),
-    fetchCSV(vaxStatesUrl).then(categoryByState)
+    fetchCSV(vaxStatesUrl).then(groupByState)
   ]);
   const mainContainer = document.getElementById('main-container');
   const vaxContainer = document.getElementById('vax-container');
