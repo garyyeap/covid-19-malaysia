@@ -60,6 +60,13 @@
       color: #fff;
       text-align: center;
     }
+    .note {
+      padding: 5px;
+      color: #fff;
+      opacity: 0.5;
+      font-size: 12px;
+      text-align: center;
+    }
     #main-container {
       display: none;
     }
@@ -257,7 +264,9 @@
       </div>
       <div class="pies-container">
         <div class="pie-container">
-          <h2>Total Deaths vs % of Population Vaccinated</h2>
+          <h2>Total Deaths vs Vaccinated Population by Brand
+            <div class="note">* (Total Vaccinated Deaths by Brand) / (Total Vaccinated Population by Brand) x 100</div>
+          </h2>
           <div id="all-deaths-vs-vaxed" class="pie"></div>
         </div>
         <div class="pie-container">

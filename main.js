@@ -256,7 +256,7 @@ function resize (charts, elements) {
 
   window.onresize = function () { 
     initCharts();
-    window.setTimeout(resize(charts, pies), 500);
+    window.setTimeout(resize(charts, pies), 1000);
   };
 
   loadingCover.style.opacity = 0;

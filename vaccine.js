@@ -292,7 +292,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: [0, '30%'],
       label: {
-        formatter: '{c}%',
+        formatter: '{b}: {c}%',
         position: 'inner'
       },
       labelLine: {
@@ -309,7 +309,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: ['31%', '55%'],
       label: {
-        formatter: '{c}%',
+        formatter: '{b}: {c}%',
         position: 'inner'
       },
       labelLine: {
@@ -326,7 +326,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: ['56%', '80%'],
       label: {
-        formatter: '{c}%',
+        formatter: '{b}: {c}%',
         position: 'inner'
       },
       labelLine: {
