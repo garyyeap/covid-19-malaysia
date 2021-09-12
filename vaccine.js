@@ -292,7 +292,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: [0, '30%'],
       label: {
-        formatter: '{b}: {c}%',
+        formatter: '{a}: {c}%',
         position: 'inner'
       },
       labelLine: {
@@ -309,7 +309,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: ['31%', '55%'],
       label: {
-        formatter: '{b}: {c}%',
+        formatter: '{a}: {c}%',
         position: 'inner'
       },
       labelLine: {
@@ -322,11 +322,11 @@ export default function (vaxData, population, deathsDetailsData) {
       ]
     },
     {
-      name: 'Full(14-days)',
+      name: 'Full(14 days)',
       type: 'pie',
       radius: ['56%', '80%'],
       label: {
-        formatter: '{b}: {c}%',
+        formatter: '{a}: {c}%',
         position: 'inner'
       },
       labelLine: {
@@ -378,7 +378,7 @@ export default function (vaxData, population, deathsDetailsData) {
   charts.push(init(document.getElementById('all-deaths-unvaxed-vs-vaxed'), 'dark'))
   charts[charts.length - 1].setOption(allDeathsVaxedVsUnvaxed);
 
-  const periods = ['Within 1 month', 'Within 2 months', 'Within 3 months', 'More than 3 months'];
+  const periods = ['< 30days', '< 60days', '< 90days', '> 90days'];
 
   const astraDeathsPeriod = {
     backgroundColor: 'rgba(0, 0, 0, 0)',

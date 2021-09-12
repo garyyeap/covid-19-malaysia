@@ -44,7 +44,7 @@ function getDeathsDetailsByAgeAndVaxTypes (data) {
       above3MonthsAfter14days: 0,
     }
   };
-  let c = 0;
+
   return data.reduce(function (result, val, i) { 
     const age = parseInt(val.age);
 
