@@ -4,7 +4,7 @@ import initEpidemicChart from './epidemic.js';
 
 function getDeathsDetailsByAgeAndVaxTypes (data) {
   // date,date_positive,date_dose1,date_dose2,vaxtype,state,age,male,bid,malaysian,comorb
-  const vaxMap = { s: 'sinovac', p: 'pfizer', a: 'astra', u: 'unknown' };
+  const vaxMap = { Sinovac: 'sinovac', Pfizer: 'pfizer', AstraZeneca: 'astra', ['Pending VMS sync']: 'unknown' };
   const dataTemplate = {
     unvaxed: 0,
     pfizer: {
