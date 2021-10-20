@@ -24,6 +24,7 @@ export default function (vaxData, population, deathsDetailsData) {
   const { astra1, astra2, cansino, pfizer1, pfizer2, sinovac1, sinovac2 } = getTotalVaxByTypes(vaxData);
   const vaxTypes = ['AstraZeneca', 'Cansino', 'Pfizer', 'Sinovac'];
   const vaxColors = ['#8213aa', '#00da7f', '#038eec', '#dd5010'];
+  const vaxStatus = ['Full(14 days)', 'Full', 'Partial', 'Unvaccinated'];
   const charts = [];
 
   const vaxTypesData = {
@@ -44,7 +45,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: [0, '50%'],
       label: {
-        formatter: '{d}%',
+        formatter: '{a}: {d}%',
         position: 'inner'
       },
       labelLine: {
@@ -62,7 +63,7 @@ export default function (vaxData, population, deathsDetailsData) {
       type: 'pie',
       radius: ['51%', '85%'],
       label: {
-        formatter: '{d}%',
+        formatter: '{a}: {d}%',
         position: 'inner'
       },
       labelLine: {
@@ -300,7 +301,7 @@ export default function (vaxData, population, deathsDetailsData) {
       },
       data: [
         { value: toLast2NoneZeroFixed(all.astra.partial / (astra1 - astra2) * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
-        { value: toLast2NoneZeroFixed(all.pfizer.partial / (pfizer1 - pfizer2) * 100), name: 'Prizer', itemStyle: { color: vaxColors[2] }},
+        { value: toLast2NoneZeroFixed(all.pfizer.partial / (pfizer1 - pfizer2) * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
         { value: toLast2NoneZeroFixed(all.sinovac.partial / (sinovac1 - sinovac2) * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
       ]
     },
@@ -351,7 +352,7 @@ export default function (vaxData, population, deathsDetailsData) {
       formatter: '{b}: {c} ({d}%)'
     },
     legend: {
-      data: ['Full(14 days)', 'Full', 'Partial', 'Unvaccinated'],
+      data: vaxStatus,
       textStyle: {
         color: '#FFF'
       }
@@ -367,10 +368,10 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: totalUnvaxed, name: 'Unvaccinated', itemStyle: { color: 'rgba(255, 255, 255, 0.4)' }},
-        { value: totalFull, name: 'Full' },
-        { value: totalFull14Days, name: 'Full(14 days)' },
-        { value: totalPartial, name: 'Partial' }
+        { value: totalUnvaxed, name: vaxStatus[3], itemStyle: { color: 'rgba(255, 255, 255, 0.4)' }},
+        { value: totalFull, name: vaxStatus[1] },
+        { value: totalFull14Days, name: vaxStatus[0] },
+        { value: totalPartial, name: vaxStatus[2] }
       ]
     }]
   };
@@ -484,6 +485,205 @@ export default function (vaxData, population, deathsDetailsData) {
 
   charts.push(init(document.getElementById('sinovac-deaths-period'), 'dark'));
   charts[charts.length -1].setOption(sinovacDeathsPeriod);
+
+  const ageGroups = ['> 60', '18 - 60'];
+  const astraDeathsAge = {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    tooltip: {
+      show: true,
+      trigger: 'item',
+      formatter: '{a}: {c}({d}%)'
+    },
+    legend: {
+      data: ageGroups,
+      textStyle: {
+        color: '#FFF'
+      }
+    },
+    series: [{
+      name: vaxStatus[2],
+      type: 'pie',
+      radius: [0, '30%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.astra.partial, name: ageGroups[1] },
+        { value: above60.astra.partial, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[1],
+      type: 'pie',
+      radius: ['31%', '55%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.astra.full, name: ageGroups[1] },
+        { value: above60.astra.full, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[0],
+      type: 'pie',
+      radius: ['56%', '80%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.astra.full14days, name: ageGroups[1] },
+        { value: above60.astra.full14days, name: ageGroups[0] }
+      ]
+    }]
+  };
+
+  charts.push(init(document.getElementById('astra-deaths-age'), 'dark'))
+  charts[charts.length - 1].setOption(astraDeathsAge);
+
+  const pfizerDeathsAge = {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    tooltip: {
+      show: true,
+      trigger: 'item',
+      formatter: '{a}: {c}({d}%)'
+    },
+    legend: {
+      data: ageGroups,
+      textStyle: {
+        color: '#FFF'
+      }
+    },
+    series: [{
+      name: vaxStatus[2],
+      type: 'pie',
+      radius: [0, '30%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.pfizer.partial, name: ageGroups[1] },
+        { value: above60.pfizer.partial, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[1],
+      type: 'pie',
+      radius: ['31%', '55%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.pfizer.full, name: ageGroups[1] },
+        { value: above60.pfizer.full, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[0],
+      type: 'pie',
+      radius: ['56%', '80%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.pfizer.full14days, name: ageGroups[1] },
+        { value: above60.pfizer.full14days, name: ageGroups[0] }
+      ]
+    }]
+  };
+
+  charts.push(init(document.getElementById('pfizer-deaths-age'), 'dark'))
+  charts[charts.length - 1].setOption(pfizerDeathsAge);
+
+  const sinovacDeathsAge = {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    tooltip: {
+      show: true,
+      trigger: 'item',
+      formatter: '{a}: {c}({d}%)'
+    },
+    legend: {
+      data: ageGroups,
+      textStyle: {
+        color: '#FFF'
+      }
+    },
+    series: [{
+      name: vaxStatus[2],
+      type: 'pie',
+      radius: [0, '35%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.sinovac.partial, name: ageGroups[1] },
+        { value: above60.sinovac.partial, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[1],
+      type: 'pie',
+      radius: ['36%', '55%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.sinovac.full, name: ageGroups[1] },
+        { value: above60.sinovac.full, name: ageGroups[0] }
+      ]
+    },
+    {
+      name: vaxStatus[0],
+      type: 'pie',
+      radius: ['56%', '85%'],
+      label: {
+        formatter: '{a}: {c}',
+        position: 'inner'
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: between18and60.sinovac.full14days, name: ageGroups[1] },
+        { value: above60.sinovac.full14days, name: ageGroups[0] }
+      ]
+    }]
+  };
+
+  charts.push(init(document.getElementById('sinovac-deaths-age'), 'dark'))
+  charts[charts.length - 1].setOption(sinovacDeathsAge);
 
   return charts;
 }
