@@ -4,10 +4,18 @@ import initEpidemicChart from './epidemic.js';
 
 function getDeathsDetailsByAgeAndVaxTypes (data) {
   // date,date_positive,date_dose1,date_dose2,vaxtype,state,age,male,bid,malaysian,comorb
-  const vaxMap = { Sinovac: 'sinovac', Pfizer: 'pfizer', AstraZeneca: 'astra', ['Pending VMS sync']: 'unknown' };
+  const vaxMap = { 
+    Sinovac: 'Sinovac', 
+    Pfizer: 'Pfizer', 
+    AstraZeneca: 'AstraZeneca', 
+    Sinopharm: 'Sinopharm', 
+    Cansino: 'Cansino',
+    ['Pending VMS sync']: 'unknown' 
+  };
+  
   const dataTemplate = {
     unvaxed: 0,
-    pfizer: {
+    Pfizer: {
       partial: 0,
       full14days: 0,
       full: 0,
@@ -16,7 +24,7 @@ function getDeathsDetailsByAgeAndVaxTypes (data) {
       below3MonthsAfter14days: 0,
       above3MonthsAfter14days: 0,
     },
-    sinovac: {
+    Sinovac: {
       partial: 0,
       full14days: 0,
       full: 0,
@@ -25,7 +33,25 @@ function getDeathsDetailsByAgeAndVaxTypes (data) {
       below3MonthsAfter14days: 0,
       above3MonthsAfter14days: 0,
     },
-    astra: {
+    AstraZeneca: {
+      partial: 0,
+      full14days: 0,
+      full: 0,
+      below1MonthAfter14days: 0,
+      below2MonthsAfter14days: 0,
+      below3MonthsAfter14days: 0,
+      above3MonthsAfter14days: 0,
+    },
+    Sinopharm: {
+      partial: 0,
+      full14days: 0,
+      full: 0,
+      below1MonthAfter14days: 0,
+      below2MonthsAfter14days: 0,
+      below3MonthsAfter14days: 0,
+      above3MonthsAfter14days: 0,
+    },
+    Cansino: {
       partial: 0,
       full14days: 0,
       full: 0,
@@ -49,74 +75,74 @@ function getDeathsDetailsByAgeAndVaxTypes (data) {
     const age = parseInt(val.age);
 
     if (!!val.date_dose2) {
-      result.all[vaxMap[val.vaxtype]].full += 1;
+      result.all[vaxMap[val.brand2]].full += 1;
 
       if (age >= 60) {
-        result.above60[vaxMap[val.vaxtype]].full += 1;
+        result.above60[vaxMap[val.brand2]].full += 1;
       } else if (age >= 18) {
-        result.between18and60[vaxMap[val.vaxtype]].full += 1;
+        result.between18and60[vaxMap[val.brand2]].full += 1;
       } else {
-        result.under18[vaxMap[val.vaxtype]].full += 1;
+        result.under18[vaxMap[val.brand2]].full += 1;
       }
 
       if (dayjs(val.date_positive).diff(val.date_dose2, 'day') >= 14) {
-        result.all[vaxMap[val.vaxtype]].full14days += 1;
+        result.all[vaxMap[val.brand2]].full14days += 1;
         if (age >= 60) {
-          result.above60[vaxMap[val.vaxtype]].full14days += 1;
+          result.above60[vaxMap[val.brand2]].full14days += 1;
         } else if (age >= 18) {
-          result.between18and60[vaxMap[val.vaxtype]].full14days += 1;
+          result.between18and60[vaxMap[val.brand2]].full14days += 1;
         } else {
-          result.under18[vaxMap[val.vaxtype]].full14days += 1;
+          result.under18[vaxMap[val.brand2]].full14days += 1;
         }
 
         const diff = Math.abs(dayjs(val.date_dose2).add(14, 'day').diff(val.date, 'day'));
 
         if (diff < 30) {
-          result.all[vaxMap[val.vaxtype]].below1MonthAfter14days += 1;
+          result.all[vaxMap[val.brand2]].below1MonthAfter14days += 1;
           if (age >= 60) {
-            result.above60[vaxMap[val.vaxtype]].below1MonthAfter14days += 1;
+            result.above60[vaxMap[val.brand2]].below1MonthAfter14days += 1;
           } else if (age >= 18) {
-            result.between18and60[vaxMap[val.vaxtype]].below1MonthAfter14days += 1;
+            result.between18and60[vaxMap[val.brand2]].below1MonthAfter14days += 1;
           } else {
-            result.under18[vaxMap[val.vaxtype]].below1MonthAfter14days += 1;
+            result.under18[vaxMap[val.brand2]].below1MonthAfter14days += 1;
           }
         } else if (diff < 60) {
-          result.all[vaxMap[val.vaxtype]].below2MonthsAfter14days += 1;
+          result.all[vaxMap[val.brand2]].below2MonthsAfter14days += 1;
           if (age >= 60) {
-            result.above60[vaxMap[val.vaxtype]].below2MonthsAfter14days += 1;
+            result.above60[vaxMap[val.brand2]].below2MonthsAfter14days += 1;
           } else if (age >= 18) {
-            result.between18and60[vaxMap[val.vaxtype]].below2MonthsAfter14days += 1;
+            result.between18and60[vaxMap[val.brand2]].below2MonthsAfter14days += 1;
           } else {
-            result.under18[vaxMap[val.vaxtype]].below2MonthsAfter14days += 1;
+            result.under18[vaxMap[val.brand2]].below2MonthsAfter14days += 1;
           }
         } else if (diff < 90) {
-          result.all[vaxMap[val.vaxtype]].below3MonthsAfter14days += 1;
+          result.all[vaxMap[val.brand2]].below3MonthsAfter14days += 1;
           if (age >= 60) {
-            result.above60[vaxMap[val.vaxtype]].below3MonthsAfter14days += 1;
+            result.above60[vaxMap[val.brand2]].below3MonthsAfter14days += 1;
           } else if (age >= 18) {
-            result.between18and60[vaxMap[val.vaxtype]].below3MonthsAfter14days += 1;
+            result.between18and60[vaxMap[val.brand2]].below3MonthsAfter14days += 1;
           } else {
-            result.under18[vaxMap[val.vaxtype]].below3MonthsAfter14days += 1;
+            result.under18[vaxMap[val.brand2]].below3MonthsAfter14days += 1;
           }
         } else {
-          result.all[vaxMap[val.vaxtype]].above3MonthsAfter14days += 1;
+          result.all[vaxMap[val.brand2]].above3MonthsAfter14days += 1;
           if (age >= 60) {
-            result.above60[vaxMap[val.vaxtype]].above3MonthsAfter14days += 1;
+            result.above60[vaxMap[val.brand2]].above3MonthsAfter14days += 1;
           } else if (age >= 18) {
-            result.between18and60[vaxMap[val.vaxtype]].above3MonthsAfter14days += 1;
+            result.between18and60[vaxMap[val.brand2]].above3MonthsAfter14days += 1;
           } else {
-            result.under18[vaxMap[val.vaxtype]].above3MonthsAfter14days += 1;
+            result.under18[vaxMap[val.brand2]].above3MonthsAfter14days += 1;
           }
         }
       }
     } else if (!!val.date_dose1) {
-      result.all[vaxMap[val.vaxtype]].partial += 1;
+      result.all[vaxMap[val.brand1]].partial += 1;
       if (age >= 60) {
-        result.above60[vaxMap[val.vaxtype]].partial += 1;
+        result.above60[vaxMap[val.brand1]].partial += 1;
       } else if (age >= 18) {
-        result.between18and60[vaxMap[val.vaxtype]].partial += 1;
+        result.between18and60[vaxMap[val.brand1]].partial += 1;
       } else {
-        result.under18[vaxMap[val.vaxtype]].partial += 1;
+        result.under18[vaxMap[val.brand1]].partial += 1;
       }
     } else {
       result.all.unvaxed += 1;

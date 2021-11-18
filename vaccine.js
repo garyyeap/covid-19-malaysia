@@ -1,7 +1,19 @@
 import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.2/echarts.esm.min.js';
 
 function getTotalVaxByTypes (data) {
-  const types = ['pfizer1', 'pfizer2', 'sinovac1', 'sinovac2', 'astra1', 'astra2', 'cansino'];
+  const types = [
+    'pfizer1', 
+    'pfizer2', 
+    'pfizer3', 
+    'sinovac1', 
+    'sinovac2', 
+    'sinovac3', 
+    'astra1', 
+    'astra2', 
+    'astra3', 
+    'cansino',
+    'cansino3'
+  ];
   const initResult = types.reduce(function (result, val) { 
     result[val] = 0; 
 
@@ -300,9 +312,9 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: toLast2NoneZeroFixed(all.astra.partial / (astra1 - astra2) * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
-        { value: toLast2NoneZeroFixed(all.pfizer.partial / (pfizer1 - pfizer2) * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
-        { value: toLast2NoneZeroFixed(all.sinovac.partial / (sinovac1 - sinovac2) * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
+        { value: toLast2NoneZeroFixed(all[vaxTypes[0]].partial / (astra1 - astra2) * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[2]].partial / (pfizer1 - pfizer2) * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[3]].partial / (sinovac1 - sinovac2) * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
       ]
     },
     {
@@ -317,9 +329,9 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: toLast2NoneZeroFixed(all.astra.full / astra2 * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
-        { value: toLast2NoneZeroFixed(all.pfizer.full / pfizer2 * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
-        { value: toLast2NoneZeroFixed(all.sinovac.full / sinovac2 * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
+        { value: toLast2NoneZeroFixed(all[vaxTypes[0]].full / astra2 * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[2]].full / pfizer2 * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[3]].full / sinovac2 * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
       ]
     },
     {
@@ -334,9 +346,9 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: toLast2NoneZeroFixed(all.astra.full14days / astra2 * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
-        { value: toLast2NoneZeroFixed(all.pfizer.full14days / pfizer2 * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
-        { value: toLast2NoneZeroFixed(all.sinovac.full14days / sinovac2 * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
+        { value: toLast2NoneZeroFixed(all[vaxTypes[0]].full14days / astra2 * 100), name: vaxTypes[0], itemStyle: { color: vaxColors[0] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[2]].full14days / pfizer2 * 100), name: vaxTypes[2], itemStyle: { color: vaxColors[2] }},
+        { value: toLast2NoneZeroFixed(all[vaxTypes[3]].full14days / sinovac2 * 100), name: vaxTypes[3], itemStyle: { color: vaxColors[3] }}
       ]
     }]
   };
@@ -405,10 +417,10 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: all.astra.below1MonthAfter14days, name: periods[0] },
-        { value: all.astra.below2MonthsAfter14days, name: periods[1] },
-        { value: all.astra.below3MonthsAfter14days, name: periods[2] },
-        { value: all.astra.above3MonthsAfter14days, name: periods[3] },
+        { value: all[vaxTypes[0]].below1MonthAfter14days, name: periods[0] },
+        { value: all[vaxTypes[0]].below2MonthsAfter14days, name: periods[1] },
+        { value: all[vaxTypes[0]].below3MonthsAfter14days, name: periods[2] },
+        { value: all[vaxTypes[0]].above3MonthsAfter14days, name: periods[3] },
       ]
     }]
   };
@@ -440,10 +452,10 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: all.pfizer.below1MonthAfter14days, name: periods[0] },
-        { value: all.pfizer.below2MonthsAfter14days, name: periods[1] },
-        { value: all.pfizer.below3MonthsAfter14days, name: periods[2] },
-        { value: all.pfizer.above3MonthsAfter14days, name: periods[3] },
+        { value: all[vaxTypes[2]].below1MonthAfter14days, name: periods[0] },
+        { value: all[vaxTypes[2]].below2MonthsAfter14days, name: periods[1] },
+        { value: all[vaxTypes[2]].below3MonthsAfter14days, name: periods[2] },
+        { value: all[vaxTypes[2]].above3MonthsAfter14days, name: periods[3] },
       ]
     }]
   };
@@ -475,10 +487,10 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: all.sinovac.below1MonthAfter14days, name: periods[0] },
-        { value: all.sinovac.below2MonthsAfter14days, name: periods[1] },
-        { value: all.sinovac.below3MonthsAfter14days, name: periods[2] },
-        { value: all.sinovac.above3MonthsAfter14days, name: periods[3] },
+        { value: all[vaxTypes[3]].below1MonthAfter14days, name: periods[0] },
+        { value: all[vaxTypes[3]].below2MonthsAfter14days, name: periods[1] },
+        { value: all[vaxTypes[3]].below3MonthsAfter14days, name: periods[2] },
+        { value: all[vaxTypes[3]].above3MonthsAfter14days, name: periods[3] },
       ]
     }]
   };
@@ -512,8 +524,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.astra.partial, name: ageGroups[1] },
-        { value: above60.astra.partial, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[0]].partial, name: ageGroups[1] },
+        { value: above60[vaxTypes[0]].partial, name: ageGroups[0] }
       ]
     },
     {
@@ -528,8 +540,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.astra.full, name: ageGroups[1] },
-        { value: above60.astra.full, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[0]].full, name: ageGroups[1] },
+        { value: above60[vaxTypes[0]].full, name: ageGroups[0] }
       ]
     },
     {
@@ -544,8 +556,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.astra.full14days, name: ageGroups[1] },
-        { value: above60.astra.full14days, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[0]].full14days, name: ageGroups[1] },
+        { value: above60[vaxTypes[0]].full14days, name: ageGroups[0] }
       ]
     }]
   };
@@ -578,8 +590,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.pfizer.partial, name: ageGroups[1] },
-        { value: above60.pfizer.partial, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[2]].partial, name: ageGroups[1] },
+        { value: above60[vaxTypes[2]].partial, name: ageGroups[0] }
       ]
     },
     {
@@ -594,8 +606,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.pfizer.full, name: ageGroups[1] },
-        { value: above60.pfizer.full, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[2]].full, name: ageGroups[1] },
+        { value: above60[vaxTypes[2]].full, name: ageGroups[0] }
       ]
     },
     {
@@ -610,8 +622,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.pfizer.full14days, name: ageGroups[1] },
-        { value: above60.pfizer.full14days, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[2]].full14days, name: ageGroups[1] },
+        { value: above60[vaxTypes[2]].full14days, name: ageGroups[0] }
       ]
     }]
   };
@@ -644,8 +656,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.sinovac.partial, name: ageGroups[1] },
-        { value: above60.sinovac.partial, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[3]].partial, name: ageGroups[1] },
+        { value: above60[vaxTypes[3]].partial, name: ageGroups[0] }
       ]
     },
     {
@@ -660,8 +672,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.sinovac.full, name: ageGroups[1] },
-        { value: above60.sinovac.full, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[3]].full, name: ageGroups[1] },
+        { value: above60[vaxTypes[3]].full, name: ageGroups[0] }
       ]
     },
     {
@@ -676,8 +688,8 @@ export default function (vaxData, population, deathsDetailsData) {
         show: false
       },
       data: [
-        { value: between18and60.sinovac.full14days, name: ageGroups[1] },
-        { value: above60.sinovac.full14days, name: ageGroups[0] }
+        { value: between18and60[vaxTypes[3]].full14days, name: ageGroups[1] },
+        { value: above60[vaxTypes[3]].full14days, name: ageGroups[0] }
       ]
     }]
   };
